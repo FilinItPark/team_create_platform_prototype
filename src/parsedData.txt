@@ -1,0 +1,12 @@
+Березуцкий Иван Викторович,IVBerezutskij,19,M,STUDENT
+Белушкин Антон Романович,ARBelushkin,19,M,STUDENT
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
+Смыслов Алексей Михайлович,AMSmyslov,30,M,ADMIN
