@@ -41,7 +41,21 @@ public class ListUser {
     public User[] getUsers() {
         return users;
     }
+
     public int getSize() {
         return size;
+    }
+
+    public void removeUser(User user) {
+        for (int i = 0; i < size; i++) {
+            if (users[i].equals(user)) {
+                for (int j = i; j < size -1; j++) {
+                    users[j] = users[j + 1];
+                }
+                size--;
+                break;
+            }
+        }
+        users[size + 1] = null;
     }
 }

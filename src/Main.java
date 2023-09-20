@@ -1,11 +1,11 @@
 import entity.ListUser;
 import entity.User;
-import utils.FileUtils;
+import entity.enums.UserRole;
+import exceptions.InvalidCredentialsException;
+import service.Authorization;
+import utils.*;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.util.Scanner;
 
 /**
  * @author 1ommy
@@ -13,27 +13,47 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
     static ListUser listUser = new ListUser();
+    static Authorization authorization = new Authorization(listUser);
 
 
     public static void main(String[] args) {
 
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/users.dat")))
-        {
-            User u = new User("Березуцкий иван викторович", "1ommy", 16, 'M', "STUDENT");
-            oos.writeObject(u);
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/users.dat"))) {
+        Menu menu;
 
-            User u = (User) ois.readObject();
-            System.out.println("\n\n\n\n\n" + u);
-        } catch (Exception ex) {
-
-            System.out.println(ex.getMessage());
-        }
         FileUtils.readFile(listUser, "src/users.csv");
+
+        System.out.println("Привет! Ты попал в программу для создания команд. Тебе необходимо авторизоваться.");
+        String login;
+        String password;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введи логин:");
+        login = scanner.nextLine();
+        System.out.println("Введи пароль:");
+        password = scanner.nextLine();
+
+        User authenticatedUser = authorization.authenticate(login, password);
+
+        if (authenticatedUser == null) {
+            throw new InvalidCredentialsException("Неверный логин или пароль");
+        }
+
+        UserRole userRole = authorization.authorize(authenticatedUser);
+
+        switch (userRole) {
+            case CUSTOMER:
+                menu = new CustomerMenu();
+                break;
+            case ADMIN:
+                menu = new AdminMenu();
+                break;
+            default:
+                menu = new StudentMenu();
+                break;
+        }
+
+        menu.printMenu();
+
         FileUtils.writeDataToFile(listUser, "src/parsedData.txt");
     }
 
