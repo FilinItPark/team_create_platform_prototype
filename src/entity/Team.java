@@ -11,7 +11,7 @@ public class Team {
     private String description;
     private int amountOfStudents;
     private User teamlead;
-    private ListUser members;
+    private List<User> members;
     private Task task;
     private TaskStatus taskStatus;
     private int teamLevel;
@@ -21,7 +21,7 @@ public class Team {
         this.description = description;
         this.amountOfStudents = amountOfStudents;
         this.teamlead = teamlead;
-        this.members = new ListUser();
+        this.members = new List<User>(new User[10]);
         this.task = task;
         this.taskStatus = TaskStatus.NEW;
         this.teamLevel = teamLevel;
@@ -59,11 +59,11 @@ public class Team {
         this.teamlead = teamlead;
     }
 
-    public ListUser getMembers() {
+    public List<User> getMembers() {
         return members;
     }
 
-    public void setMembers(ListUser members) {
+    public void setMembers(List<User> members) {
         this.members = members;
     }
 
@@ -93,9 +93,9 @@ public class Team {
 
 
     public void addMember(User user) {
-        members.insertUser(user);
+        members.insert(user);
     }
     public void removeMember(User user) {
-        members.removeUser(user);
+        members.remove(user);
     }
 }

@@ -10,12 +10,12 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    private String fullName;
-    private String login;
-    private transient int age;
-    private char sex;
-    private UserRole userRole;
-    private String password;
+    protected String fullName;
+    protected String login;
+    protected transient int age;
+    protected char sex;
+    protected UserRole userRole;
+    protected String password;
 
     public User(String fullName, String login, int age, char sex, UserRole userRole, String password) {
         this.fullName = fullName;
@@ -25,6 +25,7 @@ public class User implements Serializable {
         this.userRole = userRole;
         this.password = password;
     }
+
 
     public String getFullName() {
         return fullName;

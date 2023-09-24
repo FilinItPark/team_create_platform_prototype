@@ -1,5 +1,7 @@
 package entity;
 
+import entity.enums.UserRole;
+
 /**
  * @author 1ommy
  * @version 20.09.2023
@@ -9,7 +11,7 @@ public class Customer extends User {
     private int salary;
     private int experience;
 
-    public Customer(String fullName, String login, int age, char sex, String userRole, String password,
+    public Customer(String fullName, String login, int age, char sex, UserRole userRole, String password,
                     String position, int salary, int experience) {
         super(fullName, login, age, sex, userRole, password);
         this.position = position;

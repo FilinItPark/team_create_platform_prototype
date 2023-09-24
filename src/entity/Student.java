@@ -1,5 +1,7 @@
 package entity;
 
+import entity.enums.UserRole;
+
 /**
  * @author 1ommy
  * @version 20.09.2023
@@ -10,8 +12,25 @@ public class Student extends User {
     private String group;
     private int graduatedYear;
 
-    public Student(String fullName, String login, int age, char sex, String userRole, String password, String university, int course, String group, int graduatedYear) {
+    public Student(String fullName, String login, int age, char sex, UserRole userRole, String password, String university, int course, String group, int graduatedYear) {
         super(fullName, login, age, sex, userRole, password);
+        this.university = university;
+        this.course = course;
+        this.group = group;
+        this.graduatedYear = graduatedYear;
+    }
+    public Student(User user) {
+        super(user.fullName, user.login, user.age, user.sex, user.getUserRole(), user.getPassword());
+    }
+
+    public void updateData(String fullName, String login, int age, char sex, UserRole userRole, String password,
+                           String university, int course, String group, int graduatedYear) {
+        this.fullName = fullName;
+        this.login = login;
+        this.age = age;
+        this.sex = sex;
+        this.userRole = userRole;
+        this.password = password;
         this.university = university;
         this.course = course;
         this.group = group;
@@ -56,5 +75,12 @@ public class Student extends User {
         } else {
             System.out.println("Установите год выпуска с 1961 до 2032");
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Человек с именем %s, логином %s, возрастом %d, полом %c, ролью %s, университет %s, " +
+                        "группа %s, год выпуска %d", fullName, login,
+                age, sex, userRole, university, group, graduatedYear);
     }
 }

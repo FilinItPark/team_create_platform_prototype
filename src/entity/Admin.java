@@ -1,5 +1,7 @@
 package entity;
 
+import entity.enums.UserRole;
+
 /**
  * @author 1ommy
  * @version 20.09.2023
@@ -8,7 +10,7 @@ public class Admin extends User {
     private String position;
     private int salary;
 
-    public Admin(String fullName, String login, int age, char sex, String userRole, String password, String position, int salary) {
+    public Admin(String fullName, String login, int age, char sex, UserRole userRole, String password, String position, int salary) {
         super(fullName, login, age, sex, userRole, password);
         this.position = position;
         this.salary = salary;
