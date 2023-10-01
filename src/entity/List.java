@@ -58,17 +58,18 @@ public class List<T> implements Iterable<T> {
         return size;
     }
 
-    public void remove(T element) {
+    public boolean remove(T element) {
         for (int i = 0; i < size; i++) {
             if (data[i].equals(element)) {
                 for (int j = i; j < size - 1; j++) {
                     data[j] = data[j + 1];
                 }
                 size--;
-                break;
+                return true;
             }
         }
         data[size + 1] = null;
+        return false;
     }
 
     @Override

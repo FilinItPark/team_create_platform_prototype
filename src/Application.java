@@ -36,12 +36,8 @@ public class Application {
                 int command = scanner.nextInt();
                 Student student = new Student(user);
                 switch (command) {
-                    case 1 -> {
-                        System.out.println("Команды: " + teams);
-                    }
-                    case 2 -> {
-                        System.out.println("Задачи: " + tasks);
-                    }
+                    case 1 -> System.out.println("Команды: " + teams);
+                    case 2 -> System.out.println("Задачи: " + tasks);
                     case 3 -> {
                         System.out.print("""
                                 Введите через ентер следующие поля :
@@ -71,10 +67,27 @@ public class Application {
                         users.replaceElement(user, student);
                     }
                     case 4 -> {
-
+                        boolean found = false;
+                        for(Team team: teams) {
+                            for(User userInTeam: team.getMembers()) {
+                                if (userInTeam.equals(user)) {
+                                    System.out.println(team);
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if(found) { break; }
+                        }
+                        if (!found) {
+                            System.out.println("Вы не состоите в команде");
+                        }
                     }
                     case 5 -> {
-
+                        boolean isRemoved = false;
+                        for (Team team: teams) {
+                            isRemoved = team.getMembers().remove(user);
+                            if (isRemoved) break;
+                        }
                     }
                     case 6 -> {
                         System.out.print("""
@@ -96,6 +109,9 @@ public class Application {
                         teams.insert(team);
                     }
                 }
+            }
+            case ADMIN -> {
+
             }
         }
 
