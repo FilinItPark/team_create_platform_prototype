@@ -1,7 +1,6 @@
 package utils;
 
 import entity.List;
-import entity.ListUser;
 import entity.User;
 import entity.enums.UserRole;
 

@@ -52,5 +52,12 @@ public class Task {
             System.out.println("Чел, количество команд не может быть отрицательным");
     }
 
+    @Override
+    public String toString() {
+        return "Задание:" + title +
+                ", заказчик:" + owner.fullName +
+                ", награда: " + award  +
+                ", Максимальное количество команд: " + maxAmountOfTeams;
 
+    }
 }

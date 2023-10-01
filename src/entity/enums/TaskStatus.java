@@ -19,4 +19,11 @@ public enum TaskStatus {
     public String getTitle() {
         return title;
     }
+
+    @Override
+    public String toString() {
+        return "TaskStatus{" +
+                "title='" + title + '\'' +
+                '}';
+    }
 }

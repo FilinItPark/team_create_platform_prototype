@@ -95,7 +95,20 @@ public class Team {
     public void addMember(User user) {
         members.insert(user);
     }
+
     public void removeMember(User user) {
         members.remove(user);
+    }
+
+    @Override
+    public String toString() {
+        return "Команда с названием " + title +
+                ", описанием ='" + description +
+                ", колчиеством студентов =" + amountOfStudents +
+                ", тимлидом =" + teamlead +
+                ", участниками =" + members +
+                ", заданием =" + task +
+                ", статусом задачи =" + taskStatus.getTitle() +
+                ", уровнем =" + teamLevel;
     }
 }

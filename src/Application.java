@@ -12,9 +12,10 @@ import java.util.Scanner;
  * @version 24.09.2023
  */
 public class Application {
-    static List<User> users = new List<>(new User[10]);
-    static List<Team> teams = new List<>(new Team[10]);
-    static Authorization authorization = new Authorization(users);
+    static final List<User> users = new List<>(new User[10]);
+    static final List<Team> teams = new List<>(new Team[10]);
+    static final List<Task> tasks = new List<>(new Task[10]);
+    static final Authorization authorization = new Authorization(users);
 
     public static void runApplication() {
         Menu menu;
@@ -36,10 +37,10 @@ public class Application {
                 Student student = new Student(user);
                 switch (command) {
                     case 1 -> {
-
+                        System.out.println("Команды: " + teams);
                     }
                     case 2 -> {
-
+                        System.out.println("Задачи: " + tasks);
                     }
                     case 3 -> {
                         System.out.print("""
@@ -141,5 +142,6 @@ public class Application {
         };
         return new Pair<>(authenticatedUser, menu);
     }
+
 
 }
