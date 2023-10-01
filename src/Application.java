@@ -111,7 +111,57 @@ public class Application {
                 }
             }
             case ADMIN -> {
+                int command = scanner.nextInt();
+                switch (command) {
+                    case 1 -> {
+                        System.out.println("Какого пользователя вы хотите создать: \n" +
+                                "1. " + UserRole.STUDENT +  "\n" +
+                                "2. " + UserRole.CUSTOMER + "\n" +
+                                "3. " + UserRole.ADMIN
+                        );
+                        String type = scanner.nextLine();
+                        if(UserRole.valueOf(type).equals(UserRole.STUDENT)) {
+                            System.out.println("Введите имя:");
+                            String fullName = scanner.nextLine();
+                            System.out.println("Введите логин:");
+                            String login = scanner.nextLine();
+                            System.out.println("Введите ваш возраст:");
+                            int age = scanner.nextInt();
+                            System.out.println("Введите ваш пол:");
+                            char sex = scanner.nextLine().charAt(0);
+                            System.out.println("Введите пароль:");
+                            String password = scanner.nextLine();
+                            System.out.println("Введите универ:");
+                            String university = scanner.nextLine();
+                            System.out.println("Введите курс:");
+                            int course = scanner.nextInt();
+                            System.out.println("Введите группу:");
+                            String group = scanner.nextLine();
+                            System.out.println("Введите год выпуска:");
+                            int graduatedYear = scanner.nextInt();
 
+                            Student student = new Student(fullName, login,age, sex, UserRole.STUDENT, password, university,
+                                    course,group, graduatedYear);
+                            users.insert(student);
+                        }
+                    }
+
+                    case 2 -> {
+                        System.out.println(teams);
+                    }
+
+                    case 3 -> {
+                        System.out.println(users);
+                    }
+
+                    case 4 -> {
+
+                    }
+
+                    case 5 -> {
+                        System.out.println(tasks);
+                    }
+                }
             }
         }
 
