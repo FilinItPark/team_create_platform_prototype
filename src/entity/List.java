@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -7,7 +8,7 @@ import java.util.Iterator;
  * @author 1ommy
  * @version 17.09.2023
  */
-public class List<T> implements Iterable<T> {
+public class List<T> implements Iterable<T>, Serializable {
     private T[] data;
     private int capacity = 10;
     private int size = 0;
@@ -79,13 +80,14 @@ public class List<T> implements Iterable<T> {
 
     @Override
     public String toString() {
-        if (size == 0) return "Нет элементов в массиве";
-
         final StringBuilder stringBuilder = new StringBuilder();
         for (T element : data) {
-            stringBuilder.append(element.toString());
+            if (element != null) {
+                stringBuilder.append(element.toString());
+                stringBuilder.append("\n");
+            }
         }
-        return stringBuilder.toString();
+        return !stringBuilder.isEmpty() ? stringBuilder.toString() : "Нет элементов в массиве";
     }
 
 

@@ -12,15 +12,17 @@ import java.util.Scanner;
  * @version 24.09.2023
  */
 public class Application {
-    static final List<User> users = new List<>(new User[10]);
-    static final List<Team> teams = new List<>(new Team[10]);
-    static final List<Task> tasks = new List<>(new Task[10]);
+    static List<User> users = new List<>(new User[10]);
+    static List<Team> teams = new List<>(new Team[10]);
+    static List<Task> tasks = new List<>(new Task[10]);
     static final Authorization authorization = new Authorization(users);
 
     public static void runApplication() {
         Menu menu;
 
-        FileUtils.readFile(users, "src/users.csv");
+        users = FileUtils.<User>readFile("src/users.csv");
+        teams = FileUtils.<Team>readFile("src/teams.csv");
+        tasks = FileUtils.<Task>readFile("src/tasks.csv");
 
         System.out.println("Привет! Ты попал в программу для создания команд. Тебе необходимо авторизоваться.");
 
@@ -68,15 +70,17 @@ public class Application {
                     }
                     case 4 -> {
                         boolean found = false;
-                        for(Team team: teams) {
-                            for(User userInTeam: team.getMembers()) {
+                        for (Team team : teams) {
+                            for (User userInTeam : team.getMembers()) {
                                 if (userInTeam.equals(user)) {
                                     System.out.println(team);
                                     found = true;
                                     break;
                                 }
                             }
-                            if(found) { break; }
+                            if (found) {
+                                break;
+                            }
                         }
                         if (!found) {
                             System.out.println("Вы не состоите в команде");
@@ -84,7 +88,7 @@ public class Application {
                     }
                     case 5 -> {
                         boolean isRemoved = false;
-                        for (Team team: teams) {
+                        for (Team team : teams) {
                             isRemoved = team.getMembers().remove(user);
                             if (isRemoved) break;
                         }
@@ -105,7 +109,13 @@ public class Application {
 
                         teamLead = getUserByLogin(teamLeadLogin, teamLead);
 
-                        Team team = new Team(title, description, amountOfStudents, teamLead, null, 1);
+                        Team team = Team.builder()
+                                .withTitle(title)
+                                .withDescription(description)
+                                .withAmountOfStudents(amountOfStudents)
+                                .withTeamLead(teamLead)
+                                .build();
+
                         teams.insert(team);
                     }
                 }
@@ -115,22 +125,27 @@ public class Application {
                 switch (command) {
                     case 1 -> {
                         System.out.println("Какого пользователя вы хотите создать: \n" +
-                                "1. " + UserRole.STUDENT +  "\n" +
+                                "1. " + UserRole.STUDENT + "\n" +
                                 "2. " + UserRole.CUSTOMER + "\n" +
                                 "3. " + UserRole.ADMIN
                         );
                         String type = scanner.nextLine();
-                        if(UserRole.valueOf(type).equals(UserRole.STUDENT)) {
-                            System.out.println("Введите имя:");
-                            String fullName = scanner.nextLine();
-                            System.out.println("Введите логин:");
-                            String login = scanner.nextLine();
-                            System.out.println("Введите ваш возраст:");
-                            int age = scanner.nextInt();
-                            System.out.println("Введите ваш пол:");
-                            char sex = scanner.nextLine().charAt(0);
-                            System.out.println("Введите пароль:");
-                            String password = scanner.nextLine();
+
+                        checkIsCorrectRole(type);
+
+                        System.out.println("Введите имя:");
+                        String fullName = scanner.nextLine();
+                        System.out.println("Введите логин:");
+                        String login = scanner.nextLine();
+                        System.out.println("Введите ваш возраст:");
+                        int age = scanner.nextInt();
+                        System.out.println("Введите ваш пол:");
+                        char sex = scanner.nextLine().charAt(0);
+                        System.out.println("Введите пароль:");
+                        String password = scanner.nextLine();
+
+                        User newUser = null;
+                        if (checkRole(type, UserRole.STUDENT)) {
                             System.out.println("Введите универ:");
                             String university = scanner.nextLine();
                             System.out.println("Введите курс:");
@@ -140,32 +155,108 @@ public class Application {
                             System.out.println("Введите год выпуска:");
                             int graduatedYear = scanner.nextInt();
 
-                            Student student = new Student(fullName, login,age, sex, UserRole.STUDENT, password, university,
-                                    course,group, graduatedYear);
-                            users.insert(student);
+                            newUser = new Student(fullName, login, age, sex, UserRole.STUDENT, password, university,
+                                    course, group, graduatedYear);
+                        } else {
+                            System.out.println("Введите вашу должность:");
+                            String position = scanner.nextLine();
+                            System.out.println("Введите вашу зарплату:");
+                            int salary = scanner.nextInt();
+
+                            if (checkRole(type, UserRole.ADMIN)) {
+                                newUser = new Admin(fullName, login, age, sex, UserRole.ADMIN, password, position,
+                                        salary);
+                            }
+
+                            if (checkRole(type, UserRole.CUSTOMER)) {
+                                System.out.println("Введите ваш стаж работы");
+                                int experience = scanner.nextInt();
+
+                                newUser = new Customer(fullName, login, age, sex, UserRole.CUSTOMER, password, position,
+                                        salary, experience);
+                            }
                         }
+
+                        users.insert(newUser);
                     }
 
-                    case 2 -> {
-                        System.out.println(teams);
+                    case 2 -> System.out.println(teams);
+                    case 3 -> System.out.println(users);
+                    case 4 -> System.out.println(tasks);
+                }
+            }
+            case CUSTOMER -> {
+                int command = scanner.nextInt();
+                switch (command) {
+                    case 1: {
+                        System.out.println("Введите название задачи");
+                        String title = scanner.nextLine();
+
+                        System.out.println("Введите награду");
+                        String award = scanner.nextLine();
+
+                        System.out.println("Введите максимальное количество команд");
+                        int maxAmountOfTeams = scanner.nextInt();
+
+
+                        Task task = new Task(title, (Customer) user, award, maxAmountOfTeams);
+
+                        tasks.insert(task);
                     }
+                    case 2: {
+                        System.out.println("Введите название задачи");
+                        String title = scanner.nextLine();
 
-                    case 3 -> {
-                        System.out.println(users);
-                    }
+                        Task task = findTask(title);
 
-                    case 4 -> {
+                        if (task == null) throw new IllegalArgumentException("Такая задача не существует");
 
-                    }
+                        List<Team> teamsSolvingThisTask = new List<>(new Team[10]);
 
-                    case 5 -> {
-                        System.out.println(tasks);
+                        for (Team team : teams) {
+                            if (team.getTask().equals(task)) {
+                                teamsSolvingThisTask.insert(team);
+                            }
+                        }
+
+                        System.out.println(teamsSolvingThisTask);
                     }
                 }
             }
         }
 
-        FileUtils.writeDataToFile(users, "src/parsedData.txt");
+        FileUtils.writeDataToFile(users, "src/users.txt");
+        FileUtils.writeDataToFile(teams, "src/teams.txt");
+        FileUtils.writeDataToFile(tasks, "src/tasks.txt");
+    }
+
+    private static Task findTask(String title) {
+        Task foundedTask = null;
+        for (Task task : tasks) {
+            if (task.getTitle().equals(title)) {
+                foundedTask = task;
+                break;
+            }
+        }
+
+        return foundedTask;
+    }
+
+    private static void checkIsCorrectRole(String type) {
+        UserRole[] roles = UserRole.values();
+
+        boolean isRoleExist = false;
+        for (UserRole role : roles) {
+            if (role.toString().equals(type)) {
+                isRoleExist = true;
+                break;
+            }
+        }
+        if (!isRoleExist) throw new IllegalArgumentException("Вы ввели некорректную роль");
+    }
+
+    private static boolean checkRole(String type, UserRole role) {
+        return UserRole.valueOf(type).equals(role);
     }
 
     private static User getUserByLogin(String teamLeadLogin, User teamLead) {

@@ -1,4 +1,6 @@
 import entity.List;
+import entity.User;
+import utils.FileUtils;
 
 /**
  * @author 1ommy
@@ -6,7 +8,12 @@ import entity.List;
  */
 public class Main {
     public static void main(String[] args) {
-        Application.runApplication();
+//        Application.runApplication();
+
+
+        List<User> users1 = FileUtils.<User>readFile("src/users.txt");
+
+        System.out.println(users1);
 
        /* List<Integer> lst = new List<>(new Integer[5]);
         lst.insert(7);

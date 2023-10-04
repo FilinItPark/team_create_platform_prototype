@@ -1,10 +1,12 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * @author 1ommy
  * @version 20.09.2023
  */
-public class Task {
+public class Task implements Serializable {
     private String title;
     private Customer owner;
     private String award;
