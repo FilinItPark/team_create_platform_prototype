@@ -1,6 +1,8 @@
-package entity;
+package team.platform.entity;
 
-import entity.enums.UserRole;
+import team.platform.bootstrap.Application;
+import team.platform.entity.enums.UserRole;
+import team.platform.exceptions.UserNotFoundException;
 
 import java.io.Serializable;
 
@@ -73,6 +75,20 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static User getUserByLogin(String teamLeadLogin, User teamLead, Application application) {
+        for (int i = 0; i < application.users.getSize(); i++) {
+            User element = application.users.getAll()[i];
+            if (element.getLogin().equals(teamLeadLogin)) {
+                teamLead = element;
+            }
+        }
+
+        if (teamLead == null) {
+            throw new UserNotFoundException("Тимлид с логином " + teamLeadLogin + " не найден");
+        }
+        return teamLead;
     }
 
     @Override

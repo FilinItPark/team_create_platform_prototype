@@ -1,4 +1,6 @@
-package entity;
+package team.platform.entity;
+
+import team.platform.bootstrap.Application;
 
 import java.io.Serializable;
 
@@ -52,6 +54,17 @@ public class Task implements Serializable {
             this.maxAmountOfTeams = maxAmountOfTeams;
         else
             System.out.println("Чел, количество команд не может быть отрицательным");
+    }
+    public static Task findTask(String title, Application application) {
+        Task foundedTask = null;
+        for (Task task : application.tasks) {
+            if (task.getTitle().equals(title)) {
+                foundedTask = task;
+                break;
+            }
+        }
+
+        return foundedTask;
     }
 
     @Override

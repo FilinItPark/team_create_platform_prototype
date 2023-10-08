@@ -1,4 +1,4 @@
-package entity;
+package team.platform.entity;
 
 import java.io.Serializable;
 import java.util.Arrays;

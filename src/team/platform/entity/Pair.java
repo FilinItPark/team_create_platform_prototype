@@ -1,4 +1,4 @@
-package entity;
+package team.platform.entity;
 
 /**
  * @author 1ommy

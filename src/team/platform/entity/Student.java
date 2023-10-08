@@ -1,6 +1,6 @@
-package entity;
+package team.platform.entity;
 
-import entity.enums.UserRole;
+import team.platform.entity.enums.UserRole;
 
 /**
  * @author 1ommy

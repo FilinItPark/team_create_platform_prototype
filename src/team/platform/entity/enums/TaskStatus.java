@@ -1,4 +1,4 @@
-package entity.enums;
+package team.platform.entity.enums;
 
 /**
  * @author 1ommy

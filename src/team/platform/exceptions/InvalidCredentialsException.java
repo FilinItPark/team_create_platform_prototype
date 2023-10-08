@@ -1,4 +1,4 @@
-package exceptions;
+package team.platform.exceptions;
 
 /**
  * @author 1ommy

@@ -1,19 +1,22 @@
-package entity;
+package team.platform.entity;
 
-import entity.enums.UserRole;
+import team.platform.entity.enums.UserRole;
 
 /**
  * @author 1ommy
  * @version 20.09.2023
  */
-public class Admin extends User {
+public class Customer extends User {
     private String position;
     private int salary;
+    private int experience;
 
-    public Admin(String fullName, String login, int age, char sex, UserRole userRole, String password, String position, int salary) {
+    public Customer(String fullName, String login, int age, char sex, UserRole userRole, String password,
+                    String position, int salary, int experience) {
         super(fullName, login, age, sex, userRole, password);
         this.position = position;
         this.salary = salary;
+        this.experience = experience;
     }
 
     public String getPosition() {
@@ -34,11 +37,23 @@ public class Admin extends User {
         else System.out.println("Некорретное зарплата");
     }
 
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        if (experience >= 0)
+            this.experience = experience;
+        else
+            System.out.println("Стаж работы не может быть отрицательной величиной");
+    }
+
     @Override
     public String toString() {
-        return "Admin{" +
+        return "Customer{" +
                 "position='" + position + '\'' +
                 ", salary=" + salary +
+                ", experience=" + experience +
                 ", fullName='" + fullName + '\'' +
                 ", login='" + login + '\'' +
                 ", age=" + age +

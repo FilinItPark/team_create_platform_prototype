@@ -1,6 +1,6 @@
-package entity;
+package team.platform.entity;
 
-import entity.enums.TaskStatus;
+import team.platform.entity.enums.TaskStatus;
 
 import java.io.Serializable;
 
